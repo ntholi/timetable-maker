@@ -12,11 +12,15 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Pencil, Trash2 } from 'lucide-react';
-import { StudentClass } from '@/entities/StudentClass';
+import { StudentClass } from './schema';
 import { classRepository } from '@/repositories/StudentClassRepository';
 import { toast } from 'sonner';
 
-export function ClassesTable() {
+export function ClassesTable({
+  onEdit,
+}: {
+  onEdit: (studentClass: StudentClass) => void;
+}) {
   const [classes, setClasses] = useState<StudentClass[]>([]);
 
   useEffect(() => {
@@ -61,9 +65,7 @@ export function ClassesTable() {
                     <Button
                       variant='outline'
                       size='icon'
-                      onClick={() => {
-                        // Handle edit
-                      }}
+                      onClick={() => onEdit(it)}
                     >
                       <Pencil className='h-4 w-4' />
                     </Button>

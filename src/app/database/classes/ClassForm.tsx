@@ -26,9 +26,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { StudentClass, classSchema } from './schema';
 
-export function ClassForm() {
-  const [selected, setSelected] = React.useState<StudentClass | null>(null);
-
+export function ClassForm({
+  selected,
+  onReset,
+}: {
+  selected: StudentClass | null;
+  onReset: () => void;
+}) {
   const form = useForm<StudentClass>({
     resolver: zodResolver(classSchema),
     defaultValues: {
@@ -42,6 +46,11 @@ export function ClassForm() {
       form.reset({
         name: selected.name,
         faculty: selected.faculty,
+      });
+    } else {
+      form.reset({
+        name: '',
+        faculty: undefined,
       });
     }
   }, [selected, form]);
@@ -63,14 +72,17 @@ export function ClassForm() {
   };
 
   const resetForm = () => {
-    setSelected(null);
-    form.reset();
+    form.reset({
+      name: '',
+      faculty: form.getValues('faculty'),
+    });
+    onReset();
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{selected ? 'Edit Class' : 'Add New Class'}</CardTitle>
+        <CardTitle>{selected ? 'Edit Class' : 'New Class'}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -95,10 +107,7 @@ export function ClassForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Faculty</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder='Select faculty' />
