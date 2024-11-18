@@ -1,9 +1,8 @@
 'use client';
 
-import React from 'react';
-import { Container } from '@/components/ui/container';
 import { ClassForm } from '@/app/database/classes/ClassForm';
 import { ClassesTable } from '@/app/database/classes/ClassesTable';
+import React from 'react';
 import { StudentClass } from './schema';
 
 export default function ClassesPage() {
@@ -12,14 +11,16 @@ export default function ClassesPage() {
   );
 
   return (
-    <Container>
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-        <ClassForm
-          selected={selectedClass}
-          onReset={() => setSelectedClass(null)}
-        />
-        <ClassesTable onEdit={setSelectedClass} />
-      </div>
-    </Container>
+    <div className='grid grid-cols-12 gap-6'>
+      <ClassForm
+        className='col-span-4 max-h-fit'
+        selected={selectedClass}
+        onReset={() => setSelectedClass(null)}
+      />
+      <ClassesTable
+        className='col-span-8 min-h-[80vh]'
+        onEdit={setSelectedClass}
+      />
+    </div>
   );
 }

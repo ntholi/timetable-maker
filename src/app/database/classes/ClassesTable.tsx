@@ -16,11 +16,12 @@ import { StudentClass } from './schema';
 import { classRepository } from '@/repositories/StudentClassRepository';
 import { toast } from 'sonner';
 
-export function ClassesTable({
-  onEdit,
-}: {
+type Props = {
   onEdit: (studentClass: StudentClass) => void;
-}) {
+  className?: string;
+};
+
+export function ClassesTable({ onEdit, className }: Props) {
   const [classes, setClasses] = useState<StudentClass[]>([]);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export function ClassesTable({
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>Classes</CardTitle>
       </CardHeader>

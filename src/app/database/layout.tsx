@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <Container className='mt-10'>
+    <Container className='mt-10' width='xl'>
       <Tabs
         defaultValue={getCurrentTab()}
         onValueChange={(value) => {

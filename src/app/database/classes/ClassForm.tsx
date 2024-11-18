@@ -26,13 +26,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { StudentClass, classSchema } from './schema';
 
-export function ClassForm({
-  selected,
-  onReset,
-}: {
+type Props = {
   selected: StudentClass | null;
   onReset: () => void;
-}) {
+  className?: string;
+};
+
+export function ClassForm({ selected, onReset, className }: Props) {
   const form = useForm<StudentClass>({
     resolver: zodResolver(classSchema),
     defaultValues: {
@@ -80,7 +80,7 @@ export function ClassForm({
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader>
         <CardTitle>{selected ? 'Edit Class' : 'New Class'}</CardTitle>
       </CardHeader>
