@@ -1,10 +1,16 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
@@ -12,44 +18,43 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { StudentClass } from '@/entities/StudentClass';
+import { Input } from '@/components/ui/input';
 import { classRepository } from '@/repositories/StudentClassRepository';
-import { faculties, Faculty } from '@/entities/Faculty';
+import { faculties } from '@/entities/Faculty';
 import { toast } from 'sonner';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { StudentClass, classSchema } from './schema';
 
 export function ClassForm() {
-  const [selected, setSelected] = useState<StudentClass | null>(null);
-  const [name, setName] = useState('');
-  const [faculty, setFaculty] = useState<Faculty>();
+  const [selected, setSelected] = React.useState<StudentClass | null>(null);
+
+  const form = useForm<StudentClass>({
+    resolver: zodResolver(classSchema),
+    defaultValues: {
+      name: '',
+      faculty: undefined,
+    },
+  });
 
   useEffect(() => {
     if (selected) {
-      setName(selected.name);
-      setFaculty(selected.faculty);
+      form.reset({
+        name: selected.name,
+        faculty: selected.faculty,
+      });
     }
-  }, [selected]);
+  }, [selected, form]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: StudentClass) => {
     try {
-      const classData: Partial<StudentClass> = {
-        name,
-        faculty,
-      };
-
       if (selected) {
-        await classRepository.update(selected.id ?? '', classData);
+        await classRepository.update(selected.id ?? '', data);
         toast.success('Class updated successfully');
       } else {
-        if (name && faculty) {
-          await classRepository.create({
-            name,
-            faculty,
-          });
-          toast.success('Class created successfully');
-        }
+        await classRepository.create(data);
+        toast.success('Class created successfully');
       }
-
       resetForm();
     } catch (error) {
       toast.error('An error occurred');
@@ -59,8 +64,7 @@ export function ClassForm() {
 
   const resetForm = () => {
     setSelected(null);
-    setName('');
-    setFaculty(undefined);
+    form.reset();
   };
 
   return (
@@ -69,46 +73,60 @@ export function ClassForm() {
         <CardTitle>{selected ? 'Edit Class' : 'Add New Class'}</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className='space-y-4'>
-          <div className='space-y-2'>
-            <Label htmlFor='name'>Class Name</Label>
-            <Input
-              id='name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder='Enter class name'
-              required
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+            <FormField
+              control={form.control}
+              name='name'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Class Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Enter class name' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
 
-          <div className='space-y-2'>
-            <Label htmlFor='faculty'>Faculty</Label>
-            <Select
-              value={faculty}
-              onValueChange={(value) => setFaculty(value as Faculty)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder='Select faculty' />
-              </SelectTrigger>
-              <SelectContent>
-                {faculties.map((f) => (
-                  <SelectItem key={f} value={f}>
-                    {f}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            <FormField
+              control={form.control}
+              name='faculty'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Faculty</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select faculty' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {faculties.map((f) => (
+                        <SelectItem key={f} value={f}>
+                          {f}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <div className='flex gap-2'>
-            <Button type='submit'>{selected ? 'Update' : 'Create'}</Button>
-            {selected && (
-              <Button type='button' variant='outline' onClick={resetForm}>
-                Cancel
-              </Button>
-            )}
-          </div>
-        </form>
+            <div className='flex gap-2'>
+              <Button type='submit'>{selected ? 'Update' : 'Create'}</Button>
+              {selected && (
+                <Button type='button' variant='outline' onClick={resetForm}>
+                  Cancel
+                </Button>
+              )}
+            </div>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
