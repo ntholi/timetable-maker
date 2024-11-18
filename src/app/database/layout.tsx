@@ -28,8 +28,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           const tab = tabs.find((tab) => tab.value === value);
           if (tab) router.push(tab.path);
         }}
+        className='w-full'
       >
-        <TabsList>
+        <TabsList className='w-full grid grid-cols-3'>
           {tabs.map((tab) => (
             <TabsTrigger key={tab.value} value={tab.value}>
               {tab.label}
