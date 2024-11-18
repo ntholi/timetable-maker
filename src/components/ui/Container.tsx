@@ -6,7 +6,7 @@ interface ContainerProps {
   className?: string;
 }
 
-export default function Container({
+export function Container({
   children,
   width = 'lg',
   className = '',

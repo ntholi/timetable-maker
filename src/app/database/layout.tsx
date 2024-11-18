@@ -3,7 +3,7 @@
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useRouter, usePathname } from 'next/navigation';
-import Container from '@/components/ui/Container';
+import { Container } from '@/components/ui/container';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();

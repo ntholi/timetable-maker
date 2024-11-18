@@ -181,12 +181,11 @@ export class BaseFirebaseRepository<T extends Entity> {
    * @returns Unsubscribe function
    */
   listenToCollection(
-    queryConstraints: QueryConstraint[] = [],
     onNext: (data: T[]) => void,
     onError?: (error: Error) => void
   ): Unsubscribe {
     const collectionRef = collection(this.db, this.collectionName);
-    const queryRef = query(collectionRef, ...queryConstraints);
+    const queryRef = query(collectionRef);
 
     return onSnapshot(
       queryRef,
@@ -213,8 +212,18 @@ export class BaseFirebaseRepository<T extends Entity> {
     const queryConstraints: QueryConstraint[] = Object.entries(conditions).map(
       ([field, value]) => where(field, '==', value)
     );
-
-    return this.listenToCollection(queryConstraints, onNext, onError);
+    const queryRef = query(
+      collection(this.db, this.collectionName),
+      ...queryConstraints
+    );
+    return onSnapshot(
+      queryRef,
+      (snapshot) => {
+        const items = snapshot.docs.map((doc) => this.deserialize(doc));
+        onNext(items);
+      },
+      onError
+    );
   }
 
   /**
