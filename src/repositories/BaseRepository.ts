@@ -182,10 +182,11 @@ export class BaseFirebaseRepository<T extends Entity> {
    */
   listenToCollection(
     onNext: (data: T[]) => void,
+    queryConstraints: QueryConstraint[] = [],
     onError?: (error: Error) => void
   ): Unsubscribe {
     const collectionRef = collection(this.db, this.collectionName);
-    const queryRef = query(collectionRef);
+    const queryRef = query(collectionRef, ...queryConstraints);
 
     return onSnapshot(
       queryRef,

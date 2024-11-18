@@ -25,7 +25,7 @@ export function ClassesTable({ onEdit, className }: Props) {
   const [classes, setClasses] = useState<StudentClass[]>([]);
 
   useEffect(() => {
-    const unsubscribe = classRepository.listenToCollection((items) => {
+    const unsubscribe = classRepository.listen((items) => {
       setClasses(items);
     });
 

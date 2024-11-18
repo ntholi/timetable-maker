@@ -18,7 +18,7 @@ export default function ClassesPage() {
         onReset={() => setSelectedClass(null)}
       />
       <ClassesTable
-        className='col-span-8 min-h-[80vh]'
+        className='col-span-8 h-[80vh] overflow-auto'
         onEdit={setSelectedClass}
       />
     </div>
