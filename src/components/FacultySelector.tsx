@@ -50,7 +50,7 @@ export function FacultySelector() {
               className={cn(
                 'flex items-center py-3 px-4 cursor-pointer',
                 'hover:bg-muted transition-colors',
-                it?.id === it.id && 'bg-muted'
+                it?.id === faculty && 'bg-muted'
               )}
               onClick={() => setFaculty(it.id)}
             >
