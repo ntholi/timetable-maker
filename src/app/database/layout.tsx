@@ -4,6 +4,8 @@ import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useRouter, usePathname } from 'next/navigation';
 import { Container } from '@/components/ui/container';
+import { Button } from '@/components/ui/button';
+import { ArrowLeftIcon } from 'lucide-react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -22,6 +24,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <Container className='mt-10' width='xl'>
+      <div className='flex items-baseline gap-2'>
+        <Button
+          variant='outline'
+          className='mb-5'
+          onClick={() => router.push('/')}
+        >
+          <ArrowLeftIcon className='size-4' />
+          Back
+        </Button>
+        <h1 className='text-center w-full font-semibold'>Database</h1>
+      </div>
       <Tabs
         defaultValue={getCurrentTab()}
         onValueChange={(value) => {
