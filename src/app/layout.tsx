@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
+import { FacultySelector } from '@/components/FacultySelector';
 
 export const metadata: Metadata = {
   title: 'Timetable Maker',
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body>
         {children}
         <Toaster />
+        <FacultySelector />
       </body>
     </html>
   );
