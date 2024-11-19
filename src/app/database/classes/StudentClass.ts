@@ -1,8 +1,7 @@
-import { z } from 'zod';
-import { Faculty, faculties } from '@/lib/Faculty';
 import { Entity } from '@/lib/Entity';
+import { facultyKeys } from '@/lib/Faculty';
+import { z } from 'zod';
 
-const facultyKeys = faculties.map((it) => it.id) as [Faculty, ...Faculty[]];
 export const classSchema = z.object({
   name: z
     .string()

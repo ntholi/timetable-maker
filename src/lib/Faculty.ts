@@ -8,3 +8,7 @@ export const faculties = [
 ] as const;
 
 export type Faculty = (typeof faculties)[number]['id'];
+export const facultyKeys = faculties.map((it) => it.id) as [
+  Faculty,
+  ...Faculty[]
+];
