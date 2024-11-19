@@ -19,6 +19,7 @@ class StudentClassRepository extends BaseRepository<StudentClass> {
     if (!data.faculty) {
       throw new Error('Faculty is required');
     }
+    data.name = data.name.trim().toUpperCase();
     const existing = await this.getByName(data.name);
     if (existing) {
       throw new Error(
@@ -32,6 +33,7 @@ class StudentClassRepository extends BaseRepository<StudentClass> {
     if (!data.faculty) {
       throw new Error('Faculty is required');
     }
+    data.name = data.name.trim().toUpperCase();
     const existing = await this.getByName(data.name);
     if (existing && existing.id !== id) {
       throw new Error(
