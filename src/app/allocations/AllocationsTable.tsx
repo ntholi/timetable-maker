@@ -54,7 +54,7 @@ export function AllocationsTable({ className }: Props) {
   return (
     <Card className={className}>
       <CardHeader>
-        <h2 className='text-lg font-medium'>Allocations</h2>
+        <h2 className='font-medium'>Allocations</h2>
       </CardHeader>
       <CardContent>
         {selectedFaculty ? (

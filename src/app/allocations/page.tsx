@@ -1,15 +1,19 @@
 'use client';
 
+import { Container } from '@/components/ui/container';
 import { AllocationDialog } from './AllocationDialog';
 import { AllocationsTable } from './AllocationsTable';
+import BackButton from '@/components/BackButton';
 
 export default function AllocationsPage() {
   return (
-    <div className='space-y-4'>
-      <div className='flex justify-end'>
+    <Container className='mt-5'>
+      <div className='flex justify-between'>
+        <BackButton />
+        <h1 className='font-medium'>Allocations</h1>
         <AllocationDialog />
       </div>
       <AllocationsTable className='h-[80vh] overflow-auto' />
-    </div>
+    </Container>
   );
 }
