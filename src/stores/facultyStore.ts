@@ -3,14 +3,14 @@ import { persist } from 'zustand/middleware';
 import { Faculty } from '@/entities/Faculty';
 
 interface FacultyState {
-  faculty?: Faculty;
+  faculty: Faculty | null;
   setFaculty: (faculty: Faculty) => void;
 }
 
 export const useFacultyStore = create<FacultyState>()(
   persist(
     (set) => ({
-      faculty: undefined,
+      faculty: null,
       setFaculty: (faculty) => set({ faculty: faculty }),
     }),
     {

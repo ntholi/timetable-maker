@@ -34,7 +34,7 @@ export function ClassForm({ selected, onReset, className }: Props) {
     resolver: zodResolver(classSchema),
     defaultValues: {
       name: '',
-      faculty: faculty ?? undefined,
+      faculty: faculty,
     },
   });
 
@@ -47,7 +47,7 @@ export function ClassForm({ selected, onReset, className }: Props) {
     } else {
       form.reset({
         name: '',
-        faculty: faculty!,
+        faculty: faculty,
       });
     }
   }, [selected, form, faculty]);
@@ -102,7 +102,12 @@ export function ClassForm({ selected, onReset, className }: Props) {
 
             <div className='flex flex-col gap-2'>
               <Label htmlFor='faculty'>Faculty</Label>
-              <Input type='text' name='faculty' value={faculty} disabled />
+              <Input
+                type='text'
+                name='faculty'
+                value={faculty ?? ''}
+                disabled
+              />
               <span className='text-sm text-destructive'>
                 {form.formState.errors.faculty?.message}
               </span>

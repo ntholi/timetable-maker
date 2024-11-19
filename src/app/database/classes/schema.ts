@@ -9,9 +9,11 @@ export const classSchema = z.object({
     .min(1, 'Class name is required')
     .max(6, 'Class name too long')
     .regex(/^[^0-9]+$/, 'Class name cannot contain numbers'),
-  faculty: z.enum(facultyKeys, {
-    required_error: 'Please select a faculty',
-  }),
+  faculty: z
+    .enum(facultyKeys, {
+      required_error: 'Please select a faculty',
+    })
+    .or(z.null()),
 });
 
 export type StudentClass = z.infer<typeof classSchema> & Entity;

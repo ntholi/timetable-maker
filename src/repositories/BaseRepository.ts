@@ -140,6 +140,17 @@ export class BaseFirebaseRepository<T extends Entity> {
     await batch.commit();
   }
 
+  async getDoc(query: Query): Promise<T | null> {
+    const querySnapshot = await getDocs(query);
+    const doc = querySnapshot.docs[0];
+    return doc ? this.deserialize(doc) : null;
+  }
+
+  async getDocs(query: Query): Promise<T[]> {
+    const querySnapshot = await getDocs(query);
+    return querySnapshot.docs.map((doc) => this.deserialize(doc));
+  }
+
   async exists(id: string): Promise<boolean> {
     const docRef = doc(this.db, this.collectionName, id);
     const docSnap = await getDoc(docRef);

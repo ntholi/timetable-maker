@@ -1,7 +1,7 @@
 import { StudentClass } from '@/app/database/classes/schema';
-import { BaseFirebaseRepository } from './BaseRepository';
-import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { Faculty } from '@/entities/Faculty';
+import { collection, orderBy, query, where } from 'firebase/firestore';
+import { BaseFirebaseRepository } from './BaseRepository';
 
 class StudentClassRepository extends BaseFirebaseRepository<StudentClass> {
   constructor() {
@@ -16,25 +16,37 @@ class StudentClassRepository extends BaseFirebaseRepository<StudentClass> {
   }
 
   async create(data: Omit<StudentClass, 'id'>): Promise<StudentClass> {
-    if (await this.exists(data.name)) {
-      throw new Error(`Class with name ${data.name} already exists`);
+    if (!data.faculty) {
+      throw new Error('Faculty is required');
+    }
+    const existing = await this.getByName(data.name);
+    if (existing) {
+      throw new Error(
+        `Class with name ${data.name} already exists in ${existing.faculty}`
+      );
     }
     return super.create(data);
   }
 
   async update(id: string, data: Omit<StudentClass, 'id'>): Promise<void> {
-    if (await this.exists(data.name)) {
-      throw new Error(`Class with name ${data.name} already exists`);
+    if (!data.faculty) {
+      throw new Error('Faculty is required');
+    }
+    const existing = await this.getByName(data.name);
+    if (existing && existing.id !== id) {
+      throw new Error(
+        `Class with name ${data.name} already exists in ${existing.faculty}`
+      );
     }
     return super.update(id, data);
   }
 
-  async exists(name: string): Promise<boolean> {
+  async getByName(name: string): Promise<StudentClass | null> {
     const q = query(
       collection(this.db, this.collectionName),
       where('name', '==', name)
     );
-    return getDocs(q).then((it) => it.docs.length > 0);
+    return await this.getDoc(q);
   }
 }
 
