@@ -100,32 +100,6 @@ export function ClassForm({ selected, onReset, className }: Props) {
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name='faculty'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Faculty</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Select faculty' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {faculties.map((f) => (
-                        <SelectItem key={f} value={f}>
-                          {f}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <div className='flex gap-2'>
               <Button type='submit'>{selected ? 'Update' : 'Create'}</Button>
               {selected && (

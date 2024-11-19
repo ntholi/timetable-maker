@@ -10,15 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { GraduationCap } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const faculties = [
-  { id: 'FABE', name: 'Faculty of Architecture and Built Environment' },
-  { id: 'FBMG', name: 'Faculty of Business Management' },
-  { id: 'FCTH', name: 'Faculty of Chemical Technology' },
-  { id: 'FCMB', name: 'Faculty of Computing and Media' },
-  { id: 'FDI', name: 'Faculty of Design and Innovation' },
-  { id: 'FICT', name: 'Faculty of Information and Communication Technology' },
-];
+import { faculties } from '@/entities/Faculty';
 
 export function FacultySelector() {
   const [selectedFaculty, setSelectedFaculty] = useState<string | null>(null);

@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -9,14 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Pencil, Trash2 } from 'lucide-react';
-import { StudentClass } from './schema';
+import { Faculty } from '@/entities/Faculty';
 import { classRepository } from '@/repositories/StudentClassRepository';
+import { Pencil, Trash2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { Faculty, faculties } from '@/entities/Faculty';
+import { StudentClass } from './schema';
 
 type Props = {
   onEdit: (studentClass: StudentClass) => void;
@@ -53,23 +52,7 @@ export function ClassesTable({ onEdit, className }: Props) {
   return (
     <Card className={className}>
       <CardHeader>
-        <ToggleGroup
-          type='single'
-          value={selectedFaculty}
-          onValueChange={(value: Faculty) => setSelectedFaculty(value)}
-          className='flex flex-wrap gap-2'
-        >
-          {faculties.map((faculty) => (
-            <ToggleGroupItem
-              key={faculty}
-              value={faculty}
-              size='sm'
-              variant='outline'
-            >
-              {faculty}
-            </ToggleGroupItem>
-          ))}
-        </ToggleGroup>
+        <h2 className='text-lg font-medium'>Classes</h2>
       </CardHeader>
       <CardContent>
         {selectedFaculty ? (
