@@ -16,6 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -25,18 +27,17 @@ import {
 } from '@/components/ui/select';
 import { useFacultyStore } from '@/stores/facultyStore';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Lecturer } from '../database/lecturers/Lecturer';
-import { lecturerRepository } from '../database/lecturers/repository';
-import { Room, RoomType, roomTypes } from '../database/rooms/Room';
-import { roomRepository } from '../database/rooms/repository';
 import { StudentClass } from '../database/classes/StudentClass';
 import { classRepository } from '../database/classes/repository';
+import { Lecturer } from '../database/lecturers/Lecturer';
+import { lecturerRepository } from '../database/lecturers/repository';
+import { RoomType, roomTypes } from '../database/rooms/Room';
 import { Allocation, allocationSchema } from './Allocation';
 import { allocationRepository } from './repository';
-import { Plus } from 'lucide-react';
 
 type Props = {
   onSuccess?: () => void;
@@ -68,8 +69,12 @@ export function AllocationDialog({ onSuccess }: Props) {
   }, [faculty, open]);
 
   const onSubmit = async (data: Allocation) => {
+    console.log(data);
     try {
-      await allocationRepository.create(data);
+      await allocationRepository.create({
+        ...data,
+        faculty: faculty,
+      });
       toast.success('Allocation created successfully');
       setOpen(false);
       onSuccess?.();
@@ -174,10 +179,7 @@ export function AllocationDialog({ onSuccess }: Props) {
                   <FormLabel>Room</FormLabel>
                   <Select
                     onValueChange={(value) => {
-                      const room = roomTypes.find((r) => r === value);
-                      if (room) {
-                        field.onChange(room);
-                      }
+                      field.onChange(value as RoomType);
                     }}
                   >
                     <FormControl>
@@ -197,6 +199,18 @@ export function AllocationDialog({ onSuccess }: Props) {
                 </FormItem>
               )}
             />
+            <div className='flex flex-col gap-2'>
+              <Label htmlFor='faculty'>Faculty</Label>
+              <Input
+                type='text'
+                name='faculty'
+                value={faculty ?? ''}
+                disabled
+              />
+              <span className='text-sm text-destructive'>
+                {form.formState.errors.faculty?.message}
+              </span>
+            </div>
 
             <Button type='submit'>Create</Button>
           </form>

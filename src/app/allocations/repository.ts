@@ -22,7 +22,7 @@ class AllocationRepository extends BaseRepository<Allocation> {
     const existing = await this.checkExisting(data);
     if (existing) {
       throw new Error(
-        `${data.lecturer.name} is already allocated to ${data.class.name} in ${data.room.name}`
+        `${data.course.name} for ${data.class.name} is already allocated to ${existing.lecturer.name}`
       );
     }
     return super.create(data);
@@ -35,7 +35,7 @@ class AllocationRepository extends BaseRepository<Allocation> {
     const existing = await this.checkExisting(data);
     if (existing && existing.id !== id) {
       throw new Error(
-        `${data.lecturer.name} is already allocated to ${data.class.name} in ${data.room.name}`
+        `${data.course.name} for ${data.class.name} is already allocated to ${existing.lecturer.name}`
       );
     }
     return super.update(id, data);
@@ -46,8 +46,8 @@ class AllocationRepository extends BaseRepository<Allocation> {
   ): Promise<Allocation | null> {
     const q = query(
       collection(this.db, this.collectionName),
-      where('lecturer.id', '==', data.lecturer.id),
-      where('class.id', '==', data.class.id)
+      where('class.id', '==', data.class.id),
+      where('course.id', '==', data.course.id)
     );
     return await this.getDoc(q);
   }
