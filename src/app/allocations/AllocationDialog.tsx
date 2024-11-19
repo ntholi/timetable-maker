@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import {
   Form,
@@ -16,8 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -25,26 +22,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useFacultyStore } from '@/stores/facultyStore';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { StudentClass } from '../database/classes/StudentClass';
-import { classRepository } from '../database/classes/repository';
-import { Lecturer } from '../database/lecturers/Lecturer';
-import { lecturerRepository } from '../database/lecturers/repository';
-import { RoomType, roomTypes } from '../database/rooms/Room';
-import { Allocation, allocationSchema } from './Allocation';
+import { Allocation, allocationSchema, allocationTypes } from './Allocation';
 import { allocationRepository } from './repository';
+import { useFacultyStore } from '@/stores/facultyStore';
+import { Lecturer } from '../database/lecturers/Lecturer';
+import { StudentClass } from '../database/classes/StudentClass';
+import { Room, RoomType, roomTypes } from '../database/rooms/Room';
+import { lecturerRepository } from '../database/lecturers/repository';
+import { classRepository } from '../database/classes/repository';
+import { roomRepository } from '../database/rooms/repository';
 
 type Props = {
-  onSuccess?: () => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  selected: Allocation | null;
+  onClose: () => void;
 };
 
-export function AllocationDialog({ onSuccess }: Props) {
-  const [open, setOpen] = useState(false);
+export function AllocationDialog({
+  open,
+  onOpenChange,
+  selected,
+  onClose,
+}: Props) {
   const { faculty } = useFacultyStore();
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
   const [classes, setClasses] = useState<StudentClass[]>([]);
@@ -52,52 +56,75 @@ export function AllocationDialog({ onSuccess }: Props) {
   const form = useForm<Allocation>({
     resolver: zodResolver(allocationSchema),
     defaultValues: {
+      lecturer: { id: '', name: '', title: '' },
+      class: { id: '', name: '' },
+      course: { id: '', name: '' },
+      type: allocationTypes[0],
+      room: roomTypes[0],
       faculty: faculty,
     },
   });
 
   useEffect(() => {
-    if (!faculty || !open) return;
+    if (!faculty) return;
 
-    const unsubLecturers = lecturerRepository.listenToCollection(setLecturers);
+    const unsubLecturers = lecturerRepository.listen(faculty, setLecturers);
     const unsubClasses = classRepository.listenToCollection(setClasses);
 
     return () => {
       unsubLecturers();
       unsubClasses();
     };
-  }, [faculty, open]);
+  }, [faculty]);
 
-  const onSubmit = async (data: Allocation) => {
-    console.log(data);
-    try {
-      await allocationRepository.create({
-        ...data,
+  useEffect(() => {
+    if (selected) {
+      form.reset(selected);
+    } else {
+      form.reset({
+        lecturer: { id: '', name: '', title: '' },
+        class: { id: '', name: '' },
+        course: { id: '', name: '' },
+        type: allocationTypes[0],
+        room: roomTypes[0],
         faculty: faculty,
       });
-      toast.success('Allocation created successfully');
-      setOpen(false);
-      onSuccess?.();
+    }
+  }, [selected, form, faculty]);
+
+  const onSubmit = async (data: Allocation) => {
+    try {
+      if (selected) {
+        if (!selected.id) throw new Error('Allocation ID is required');
+        await allocationRepository.update(selected.id, data);
+        toast.success('Allocation updated successfully');
+      } else {
+        await allocationRepository.create(data);
+        toast.success('Allocation created successfully');
+      }
+      handleClose();
     } catch (error) {
       toast.error('An error occurred', {
         description: (error as Error).message,
       });
-      console.error(error);
     }
   };
 
+  const handleClose = () => {
+    onClose();
+    onOpenChange(false);
+    form.reset();
+  };
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className='h-4 w-4 mr-2' />
-          Add Allocation
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New Allocation</DialogTitle>
+          <DialogTitle>
+            {selected ? 'Edit Allocation' : 'New Allocation'}
+          </DialogTitle>
         </DialogHeader>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
             <FormField
@@ -111,21 +138,22 @@ export function AllocationDialog({ onSuccess }: Props) {
                       const lecturer = lecturers.find((l) => l.id === value);
                       if (lecturer) {
                         field.onChange({
-                          id: lecturer.id!,
+                          id: lecturer.id,
                           name: lecturer.name,
                           title: lecturer.title,
                         });
                       }
                     }}
+                    value={field.value.id}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder='Select a lecturer' />
+                        <SelectValue placeholder='Select lecturer' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {lecturers.map((lecturer) => (
-                        <SelectItem key={lecturer.id} value={lecturer.id!}>
+                        <SelectItem key={lecturer.id} value={lecturer.id ?? ''}>
                           {lecturer.title} {lecturer.name}
                         </SelectItem>
                       ))}
@@ -144,24 +172,50 @@ export function AllocationDialog({ onSuccess }: Props) {
                   <FormLabel>Class</FormLabel>
                   <Select
                     onValueChange={(value) => {
-                      const selectedClass = classes.find((c) => c.id === value);
-                      if (selectedClass) {
+                      const cls = classes.find((c) => c.id === value);
+                      if (cls) {
                         field.onChange({
-                          id: selectedClass.id!,
-                          name: selectedClass.name,
+                          id: cls.id,
+                          name: cls.name,
                         });
                       }
                     }}
+                    value={field.value.id}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder='Select a class' />
+                        <SelectValue placeholder='Select class' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {classes.map((cls) => (
-                        <SelectItem key={cls.id} value={cls.id!}>
+                        <SelectItem key={cls.id} value={cls.id ?? ''}>
                           {cls.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='type'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Type</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select type' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {allocationTypes.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -176,15 +230,11 @@ export function AllocationDialog({ onSuccess }: Props) {
               name='room'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Room</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      field.onChange(value as RoomType);
-                    }}
-                  >
+                  <FormLabel>Preferred Room</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder='Select a room' />
+                        <SelectValue placeholder='Select room' />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -199,20 +249,13 @@ export function AllocationDialog({ onSuccess }: Props) {
                 </FormItem>
               )}
             />
-            <div className='flex flex-col gap-2'>
-              <Label htmlFor='faculty'>Faculty</Label>
-              <Input
-                type='text'
-                name='faculty'
-                value={faculty ?? ''}
-                disabled
-              />
-              <span className='text-sm text-destructive'>
-                {form.formState.errors.faculty?.message}
-              </span>
-            </div>
 
-            <Button type='submit'>Create</Button>
+            <div className='flex justify-end gap-2'>
+              <Button type='button' variant='outline' onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button type='submit'>{selected ? 'Update' : 'Create'}</Button>
+            </div>
           </form>
         </Form>
       </DialogContent>

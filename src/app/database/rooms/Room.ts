@@ -3,10 +3,10 @@ import { facultyKeys } from '@/lib/Faculty';
 import { z } from 'zod';
 
 export const roomTypes = [
-  'Multimedia Lab',
-  'Mac Lab',
   'Classroom',
+  'Multimedia Lab',
   'Lecture Hall',
+  'Mac Lab',
   'Network Lab',
   'Photo Lab',
   'Computer Workshop',

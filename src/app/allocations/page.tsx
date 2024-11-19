@@ -1,19 +1,40 @@
 'use client';
 
-import { Container } from '@/components/ui/container';
-import { AllocationDialog } from './AllocationDialog';
+import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
+import { Allocation } from './Allocation';
 import { AllocationsTable } from './AllocationsTable';
-import BackButton from '@/components/BackButton';
+import { AllocationDialog } from './AllocationDialog';
 
 export default function AllocationsPage() {
+  const [selectedAllocation, setSelectedAllocation] =
+    useState<Allocation | null>(null);
+  const [open, setOpen] = useState(false);
+
   return (
-    <Container className='mt-5'>
-      <div className='flex justify-between'>
-        <BackButton />
-        <h1 className='font-medium'>Allocations</h1>
-        <AllocationDialog />
+    <div className='container mx-auto py-10'>
+      <div className='flex justify-between items-center mb-6'>
+        <h1 className='text-2xl font-bold'>Allocations</h1>
+        <Button onClick={() => setOpen(true)}>
+          <Plus className='mr-2 h-4 w-4' />
+          New Allocation
+        </Button>
       </div>
-      <AllocationsTable className='h-[80vh] overflow-auto' />
-    </Container>
+
+      <AllocationsTable
+        onEdit={(allocation) => {
+          setSelectedAllocation(allocation);
+          setOpen(true);
+        }}
+      />
+
+      <AllocationDialog
+        open={open}
+        onOpenChange={setOpen}
+        selected={selectedAllocation}
+        onClose={() => setSelectedAllocation(null)}
+      />
+    </div>
   );
 }
