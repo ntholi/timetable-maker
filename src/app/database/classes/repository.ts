@@ -1,9 +1,9 @@
-import { StudentClass } from '@/app/database/classes/schema';
-import { Faculty } from '@/entities/Faculty';
+import { Faculty } from '@/lib/Faculty';
 import { collection, orderBy, query, where } from 'firebase/firestore';
-import { BaseFirebaseRepository } from './BaseRepository';
+import { BaseRepository } from '../../../lib/BaseRepository';
+import { StudentClass } from './StudentClass';
 
-class StudentClassRepository extends BaseFirebaseRepository<StudentClass> {
+class StudentClassRepository extends BaseRepository<StudentClass> {
   constructor() {
     super('studentClasses');
   }

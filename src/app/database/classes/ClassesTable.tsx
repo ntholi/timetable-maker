@@ -10,13 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Faculty } from '@/entities/Faculty';
-import { classRepository } from '@/repositories/StudentClassRepository';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { StudentClass } from './schema';
+import { StudentClass } from './StudentClass';
 import { useFacultyStore } from '@/stores/facultyStore';
+import { classRepository } from './repository';
 
 type Props = {
   onEdit: (studentClass: StudentClass) => void;

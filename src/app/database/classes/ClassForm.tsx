@@ -12,14 +12,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { classRepository } from '@/repositories/StudentClassRepository';
 import { useFacultyStore } from '@/stores/facultyStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { StudentClass, classSchema } from './schema';
-import { unknown } from 'zod';
+import { StudentClass, classSchema } from './StudentClass';
+import { classRepository } from './repository';
 
 type Props = {
   selected: StudentClass | null;

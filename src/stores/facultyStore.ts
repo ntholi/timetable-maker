@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Faculty } from '@/entities/Faculty';
+import { Faculty } from '@/lib/Faculty';
 
 interface FacultyState {
   faculty: Faculty | null;

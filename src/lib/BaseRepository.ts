@@ -1,15 +1,12 @@
-import { Entity } from '@/entities/Entity';
+import { Entity } from '@/lib/Entity';
 import { firestore } from '@/lib/firebase';
 import {
   DocumentData,
-  DocumentReference,
   DocumentSnapshot,
   Firestore,
   Query,
   QueryConstraint,
-  QuerySnapshot,
   Unsubscribe,
-  WriteBatch,
   collection,
   deleteDoc,
   doc,
@@ -23,7 +20,7 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 
-export class BaseFirebaseRepository<T extends Entity> {
+export class BaseRepository<T extends Entity> {
   protected readonly collectionName: string;
   protected readonly db: Firestore;
 

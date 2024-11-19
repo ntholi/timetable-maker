@@ -3,7 +3,7 @@
 import { ClassForm } from '@/app/database/classes/ClassForm';
 import { ClassesTable } from '@/app/database/classes/ClassesTable';
 import React from 'react';
-import { StudentClass } from './schema';
+import { StudentClass } from './StudentClass';
 
 export default function ClassesPage() {
   const [selectedClass, setSelectedClass] = React.useState<StudentClass | null>(

@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { faculties } from '@/entities/Faculty';
+import { faculties } from '@/lib/Faculty';
 import { cn } from '@/lib/utils';
 import { useFacultyStore } from '@/stores/facultyStore';
 import { GraduationCap } from 'lucide-react';
