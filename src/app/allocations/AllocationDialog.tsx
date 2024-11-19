@@ -22,19 +22,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useFacultyStore } from '@/stores/facultyStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import { classRepository } from '../database/classes/repository';
+import { StudentClass } from '../database/classes/StudentClass';
+import { Course } from '../database/courses/Course';
+import { courseRepository } from '../database/courses/repository';
+import { Lecturer } from '../database/lecturers/Lecturer';
+import { lecturerRepository } from '../database/lecturers/repository';
+import { roomTypes } from '../database/rooms/Room';
 import { Allocation, allocationSchema, allocationTypes } from './Allocation';
 import { allocationRepository } from './repository';
-import { useFacultyStore } from '@/stores/facultyStore';
-import { Lecturer } from '../database/lecturers/Lecturer';
-import { StudentClass } from '../database/classes/StudentClass';
-import { Room, RoomType, roomTypes } from '../database/rooms/Room';
-import { lecturerRepository } from '../database/lecturers/repository';
-import { classRepository } from '../database/classes/repository';
-import { roomRepository } from '../database/rooms/repository';
 
 type Props = {
   open: boolean;
@@ -52,6 +53,7 @@ export function AllocationDialog({
   const { faculty } = useFacultyStore();
   const [lecturers, setLecturers] = useState<Lecturer[]>([]);
   const [classes, setClasses] = useState<StudentClass[]>([]);
+  const [courses, setCourses] = useState<Course[]>([]);
 
   const form = useForm<Allocation>({
     resolver: zodResolver(allocationSchema),
@@ -70,10 +72,12 @@ export function AllocationDialog({
 
     const unsubLecturers = lecturerRepository.listen(faculty, setLecturers);
     const unsubClasses = classRepository.listenToCollection(setClasses);
+    const unsubCourses = courseRepository.listen(faculty, setCourses);
 
     return () => {
       unsubLecturers();
       unsubClasses();
+      unsubCourses();
     };
   }, [faculty]);
 
@@ -164,41 +168,79 @@ export function AllocationDialog({
               )}
             />
 
-            <FormField
-              control={form.control}
-              name='class'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Class</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      const cls = classes.find((c) => c.id === value);
-                      if (cls) {
-                        field.onChange({
-                          id: cls.id,
-                          name: cls.name,
-                        });
-                      }
-                    }}
-                    value={field.value.id}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Select class' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {classes.map((cls) => (
-                        <SelectItem key={cls.id} value={cls.id ?? ''}>
-                          {cls.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className='grid grid-cols-2 gap-2'>
+              <FormField
+                control={form.control}
+                name='class'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Class</FormLabel>
+                    <Select
+                      onValueChange={(value) => {
+                        const cls = classes.find((c) => c.id === value);
+                        if (cls) {
+                          field.onChange({
+                            id: cls.id,
+                            name: cls.name,
+                          });
+                        }
+                      }}
+                      value={field.value.id}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder='Select class' />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {classes.map((cls) => (
+                          <SelectItem key={cls.id} value={cls.id ?? ''}>
+                            {cls.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name='course'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Course</FormLabel>
+                    <Select
+                      onValueChange={(value) => {
+                        const course = courses.find((c) => c.id === value);
+                        if (course) {
+                          field.onChange({
+                            id: course.id,
+                            name: course.name,
+                          });
+                        }
+                      }}
+                      value={field.value.id}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder='Select course' />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {courses.map((course) => (
+                          <SelectItem key={course.id} value={course.id ?? ''}>
+                            {course.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <FormField
               control={form.control}
