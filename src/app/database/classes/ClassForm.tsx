@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -11,21 +10,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { classRepository } from '@/repositories/StudentClassRepository';
-import { faculties } from '@/entities/Faculty';
-import { toast } from 'sonner';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { StudentClass, classSchema } from './schema';
 import { useFacultyStore } from '@/stores/facultyStore';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { StudentClass, classSchema } from './schema';
 
 type Props = {
   selected: StudentClass | null;
@@ -62,7 +55,7 @@ export function ClassForm({ selected, onReset, className }: Props) {
     try {
       if (selected) {
         await classRepository.update(selected.id ?? '', data);
-        toast.success('Class updated successfully');
+        toast.success('Class updated successfully', {});
       } else {
         await classRepository.create(data);
         toast.success('Class created successfully');
@@ -103,20 +96,15 @@ export function ClassForm({ selected, onReset, className }: Props) {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name='faculty'
-              disabled
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Faculty</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
+            <div className='flex flex-col gap-2'>
+              <Label htmlFor='faculty'>Faculty</Label>
+              <Input type='text' name='faculty' value={faculty} disabled />
+              <span className='text-sm text-destructive'>
+                {form.formState.errors.faculty?.message}
+              </span>
+            </div>
+
             <div className='flex gap-2'>
               <Button type='submit'>{selected ? 'Update' : 'Create'}</Button>
               {selected && (
