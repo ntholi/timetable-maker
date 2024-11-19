@@ -82,7 +82,7 @@ export function AllocationsTable({ onEdit }: Props) {
                   <Button
                     variant='destructive'
                     size='icon'
-                    onClick={() => handleDelete(allocation.id!)}
+                    onClick={() => handleDelete(allocation!.id!)}
                   >
                     <Trash2 className='h-4 w-4' />
                   </Button>
