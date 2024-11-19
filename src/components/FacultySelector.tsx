@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -8,12 +7,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { GraduationCap } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { faculties } from '@/entities/Faculty';
+import { cn } from '@/lib/utils';
+import { useFacultyStore } from '@/stores/facultyStore';
+import { GraduationCap } from 'lucide-react';
 
 export function FacultySelector() {
-  const [selectedFaculty, setSelectedFaculty] = useState<string | null>(null);
+  const { faculty, setFaculty } = useFacultyStore();
 
   return (
     <div className='fixed bottom-6 right-6 z-50'>
@@ -22,7 +22,7 @@ export function FacultySelector() {
           <Button
             size='lg'
             className={cn(
-              selectedFaculty ? 'w-auto px-4' : 'w-14',
+              faculty ? 'w-auto px-4' : 'w-14',
               'h-14 rounded-full shadow-lg',
               'bg-primary hover:bg-primary/90',
               'transition-all duration-300 ease-in-out',
@@ -31,9 +31,9 @@ export function FacultySelector() {
             )}
           >
             <GraduationCap className='h-6 w-6 flex-shrink-0' />
-            {selectedFaculty && (
+            {faculty && (
               <span className='font-medium text-base animate-in fade-in slide-in-from-left-3'>
-                {selectedFaculty}
+                {faculty}
               </span>
             )}
           </Button>
@@ -44,21 +44,19 @@ export function FacultySelector() {
           className='w-[280px] mb-2'
           sideOffset={16}
         >
-          {faculties.map((faculty) => (
+          {faculties.map((it) => (
             <DropdownMenuItem
-              key={faculty.id}
+              key={it.id}
               className={cn(
                 'flex items-center py-3 px-4 cursor-pointer',
                 'hover:bg-muted transition-colors',
-                selectedFaculty === faculty.id && 'bg-muted'
+                it?.id === it.id && 'bg-muted'
               )}
-              onClick={() => setSelectedFaculty(faculty.id)}
+              onClick={() => setFaculty(it.id)}
             >
               <div>
-                <div className='font-medium'>{faculty.id}</div>
-                <div className='text-sm text-muted-foreground'>
-                  {faculty.name}
-                </div>
+                <div className='font-medium'>{it.id}</div>
+                <div className='text-sm text-muted-foreground'>{it.name}</div>
               </div>
             </DropdownMenuItem>
           ))}

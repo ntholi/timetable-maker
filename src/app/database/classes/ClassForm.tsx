@@ -25,6 +25,7 @@ import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { StudentClass, classSchema } from './schema';
+import { useFacultyStore } from '@/stores/facultyStore';
 
 type Props = {
   selected: StudentClass | null;
@@ -33,11 +34,13 @@ type Props = {
 };
 
 export function ClassForm({ selected, onReset, className }: Props) {
+  const { faculty } = useFacultyStore();
+
   const form = useForm<StudentClass>({
     resolver: zodResolver(classSchema),
     defaultValues: {
       name: '',
-      faculty: undefined,
+      faculty: faculty ?? undefined,
     },
   });
 
@@ -45,15 +48,15 @@ export function ClassForm({ selected, onReset, className }: Props) {
     if (selected) {
       form.reset({
         name: selected.name,
-        faculty: selected.faculty,
+        faculty: faculty,
       });
     } else {
       form.reset({
         name: '',
-        faculty: undefined,
+        faculty: faculty!,
       });
     }
-  }, [selected, form]);
+  }, [selected, form, faculty]);
 
   const onSubmit = async (data: StudentClass) => {
     try {
@@ -74,7 +77,7 @@ export function ClassForm({ selected, onReset, className }: Props) {
   const resetForm = () => {
     form.reset({
       name: '',
-      faculty: form.getValues('faculty'),
+      faculty: faculty,
     });
     onReset();
   };
@@ -95,6 +98,20 @@ export function ClassForm({ selected, onReset, className }: Props) {
                   <FormLabel>Class Name</FormLabel>
                   <FormControl>
                     <Input placeholder='Enter class name' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='faculty'
+              disabled
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Faculty</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

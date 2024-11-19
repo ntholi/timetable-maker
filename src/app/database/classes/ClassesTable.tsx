@@ -16,6 +16,7 @@ import { Pencil, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { StudentClass } from './schema';
+import { useFacultyStore } from '@/stores/facultyStore';
 
 type Props = {
   onEdit: (studentClass: StudentClass) => void;
@@ -24,7 +25,7 @@ type Props = {
 
 export function ClassesTable({ onEdit, className }: Props) {
   const [classes, setClasses] = useState<StudentClass[]>([]);
-  const [selectedFaculty, setSelectedFaculty] = useState<Faculty>();
+  const { faculty: selectedFaculty } = useFacultyStore();
 
   useEffect(() => {
     if (!selectedFaculty) {
