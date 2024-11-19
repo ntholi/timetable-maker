@@ -15,6 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const tabs = [
     { value: 'rooms', label: 'Rooms', path: '/database/rooms' },
     { value: 'classes', label: 'Classes', path: '/database/classes' },
+    { value: 'courses', label: 'Courses', path: '/database/courses' },
     { value: 'lecturers', label: 'Lecturers', path: '/database/lecturers' },
   ];
 
@@ -37,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         }}
         className='w-full'
       >
-        <TabsList className='w-full grid grid-cols-3'>
+        <TabsList className='w-full grid grid-cols-4'>
           {tabs.map((tab) => (
             <TabsTrigger key={tab.value} value={tab.value}>
               {tab.label}
