@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { StudentClass, classSchema } from './schema';
+import { unknown } from 'zod';
 
 type Props = {
   selected: StudentClass | null;
@@ -62,7 +63,9 @@ export function ClassForm({ selected, onReset, className }: Props) {
       }
       resetForm();
     } catch (error) {
-      toast.error('An error occurred');
+      toast.error('An error occurred', {
+        description: (error as Error).message,
+      });
       console.error(error);
     }
   };
