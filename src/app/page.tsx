@@ -44,12 +44,7 @@ interface NavCardProps {
   description: string;
 }
 
-export function NavCard({
-  href,
-  icon: Icon,
-  title,
-  description,
-}: NavCardProps) {
+function NavCard({ href, icon: Icon, title, description }: NavCardProps) {
   return (
     <Link href={href}>
       <div className='group transition-transform duration-200 cursor-pointer'>
