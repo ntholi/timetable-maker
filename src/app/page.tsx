@@ -1,32 +1,32 @@
 import { Database, Calendar, Users, LucideIcon } from 'lucide-react';
 import Link from 'next/link';
+import { Logo } from '@/components/logo';
+
 export default function Home() {
   const navItems = [
-    {
-      href: '/database',
-      icon: Database,
-      title: 'Database',
-      description: 'Manage courses, students, and faculty data',
-    },
     {
       href: '/timetable',
       icon: Calendar,
       title: 'Timetable',
-      description: 'View and manage class schedules',
+      description: 'Timetable scheduling',
     },
     {
       href: '/allocations',
       icon: Users,
       title: 'Allocations',
-      description: 'Assign teachers to classes',
+      description: 'Manage lecture allocations',
+    },
+    {
+      href: '/database',
+      icon: Database,
+      title: 'Database',
+      description: 'Rooms, students, and faculty data',
     },
   ];
 
   return (
     <main className='min-h-screen p-8'>
-      <h1 className='text-4xl font-bold text-center mb-12 text-muted-foreground'>
-        TheTimetable
-      </h1>
+      <Logo className='text-center mb-12' />
 
       <div className='max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6'>
         {navItems.map((item) => (
