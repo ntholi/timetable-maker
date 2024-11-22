@@ -1,6 +1,6 @@
 import { Faculty } from '@/lib/Faculty';
 import { collection, orderBy, query, where } from 'firebase/firestore';
-import { BaseRepository } from '../../../lib/BaseRepository';
+import { BaseRepository } from '@/lib/BaseRepository';
 import { Course } from './Course';
 
 class CourseRepository extends BaseRepository<Course> {

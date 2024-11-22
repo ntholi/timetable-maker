@@ -1,9 +1,9 @@
 'use client';
 
-import { ClassForm } from '@/app/database/classes/ClassForm';
-import { ClassesTable } from '@/app/database/classes/ClassesTable';
 import React from 'react';
 import { StudentClass } from './StudentClass';
+import { ClassForm } from './ClassForm';
+import { ClassesTable } from './ClassesTable';
 
 export default function ClassesPage() {
   const [selectedClass, setSelectedClass] = React.useState<StudentClass | null>(

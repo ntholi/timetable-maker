@@ -1,7 +1,7 @@
 import { Faculty } from '@/lib/Faculty';
 import { collection, orderBy, query, where } from 'firebase/firestore';
-import { BaseRepository } from '../../../lib/BaseRepository';
 import { StudentClass } from './StudentClass';
+import { BaseRepository } from '@/lib/BaseRepository';
 
 class StudentClassRepository extends BaseRepository<StudentClass> {
   constructor() {

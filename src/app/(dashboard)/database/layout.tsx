@@ -1,12 +1,9 @@
 'use client';
 
-import React from 'react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { useRouter, usePathname } from 'next/navigation';
 import { Container } from '@/components/ui/container';
-import { Button } from '@/components/ui/button';
-import { ArrowLeftIcon } from 'lucide-react';
-import BackButton from '@/components/BackButton';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { usePathname, useRouter } from 'next/navigation';
+import React from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -25,11 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <Container className='mt-10' width='xl'>
-      <div className='flex items-baseline gap-2'>
-        <BackButton />
-        <h1 className='text-center w-full font-semibold'>Database</h1>
-      </div>
+    <Container className='mt-4' width='xl'>
       <Tabs
         defaultValue={getCurrentTab()}
         onValueChange={(value) => {
