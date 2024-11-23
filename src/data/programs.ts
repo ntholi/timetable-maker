@@ -3,6 +3,7 @@ import {
   BEN,
   BHR,
   BIB,
+  BPC,
   CAT,
   CGD,
   CMK,
@@ -10,7 +11,9 @@ import {
   DBM,
   DCAV,
   DGD,
+  DJM,
   DMK,
+  DPR,
   DRM,
 } from './courses';
 
@@ -122,18 +125,21 @@ export const programs: Program[] = [
     name: 'BA in Professional Communication',
     code: 'BPC',
     faculty: 'FCMB',
+    courses: BPC,
   },
   {
     id: 506,
     name: 'Diploma in Journalism & Media',
     code: 'DJM',
     faculty: 'FCMB',
+    courses: DJM,
   },
   {
     id: 490,
     name: 'Diploma in Public Relations',
     code: 'DPR',
     faculty: 'FCMB',
+    courses: DPR,
   },
   {
     id: 521,
