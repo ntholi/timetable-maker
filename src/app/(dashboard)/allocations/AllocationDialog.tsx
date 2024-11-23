@@ -15,13 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { AutoComplete } from '@/components/ui/autocomplete';
 import { useFacultyStore } from '@/stores/facultyStore';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
@@ -137,32 +131,26 @@ export function AllocationDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Lecturer</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      const lecturer = lecturers.find((l) => l.id === value);
-                      if (lecturer) {
-                        field.onChange({
-                          id: lecturer.id,
-                          name: lecturer.name,
-                          title: lecturer.title,
-                        });
-                      }
-                    }}
-                    value={field.value.id}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Select lecturer' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {lecturers.map((lecturer) => (
-                        <SelectItem key={lecturer.id} value={lecturer.id ?? ''}>
-                          {lecturer.title} {lecturer.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <AutoComplete
+                      options={lecturers.map((lecturer) => ({
+                        value: lecturer.id ?? '',
+                        label: `${lecturer.title} ${lecturer.name}`,
+                      }))}
+                      value={field.value.id}
+                      onValueChange={(value) => {
+                        const lecturer = lecturers.find((l) => l.id === value);
+                        if (lecturer) {
+                          field.onChange({
+                            id: lecturer.id,
+                            name: lecturer.name,
+                            title: lecturer.title,
+                          });
+                        }
+                      }}
+                      placeholder='Select lecturer'
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -175,31 +163,25 @@ export function AllocationDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Class</FormLabel>
-                    <Select
-                      onValueChange={(value) => {
-                        const cls = classes.find((c) => c.id === value);
-                        if (cls) {
-                          field.onChange({
-                            id: cls.id,
-                            name: cls.name,
-                          });
-                        }
-                      }}
-                      value={field.value.id}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder='Select class' />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {classes.map((cls) => (
-                          <SelectItem key={cls.id} value={cls.id ?? ''}>
-                            {cls.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <AutoComplete
+                        options={classes.map((cls) => ({
+                          value: cls.id ?? '',
+                          label: cls.name,
+                        }))}
+                        value={field.value.id}
+                        onValueChange={(value) => {
+                          const cls = classes.find((c) => c.id === value);
+                          if (cls) {
+                            field.onChange({
+                              id: cls.id,
+                              name: cls.name,
+                            });
+                          }
+                        }}
+                        placeholder='Select class'
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -211,31 +193,25 @@ export function AllocationDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Course</FormLabel>
-                    <Select
-                      onValueChange={(value) => {
-                        const course = courses.find((c) => c.id === value);
-                        if (course) {
-                          field.onChange({
-                            id: course.id,
-                            name: course.name,
-                          });
-                        }
-                      }}
-                      value={field.value.id}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder='Select course' />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {courses.map((course) => (
-                          <SelectItem key={course.id} value={course.id ?? ''}>
-                            {course.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <AutoComplete
+                        options={courses.map((course) => ({
+                          value: course.id ?? '',
+                          label: course.name,
+                        }))}
+                        value={field.value.id}
+                        onValueChange={(value) => {
+                          const course = courses.find((c) => c.id === value);
+                          if (course) {
+                            field.onChange({
+                              id: course.id,
+                              name: course.name,
+                            });
+                          }
+                        }}
+                        placeholder='Select course'
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -248,20 +224,17 @@ export function AllocationDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Type</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Select type' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {allocationTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <AutoComplete
+                      options={allocationTypes.map((type) => ({
+                        value: type,
+                        label: type,
+                      }))}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      placeholder='Select type'
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -273,20 +246,17 @@ export function AllocationDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Preferred Room</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder='Select room' />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {roomTypes.map((room) => (
-                        <SelectItem key={room} value={room}>
-                          {room}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <FormControl>
+                    <AutoComplete
+                      options={roomTypes.map((room) => ({
+                        value: room,
+                        label: room,
+                      }))}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      placeholder='Select room'
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
