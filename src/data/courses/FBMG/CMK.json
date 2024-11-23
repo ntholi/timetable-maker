@@ -1,0 +1,46 @@
+[
+  {
+    "code": "CBIM114",
+    "name": "Introduction to Marketing"
+  },
+  {
+    "code": "CBPM114",
+    "name": "Principles of Management"
+  },
+  {
+    "code": "CBSM114",
+    "name": "Service Marketing"
+  },
+  {
+    "code": "CCBC114",
+    "name": "Business Communication"
+  },
+  {
+    "code": "CICS114",
+    "name": "Computer Skills"
+  },
+  {
+    "code": "CBBL124",
+    "name": "Fundamentals of Business Law"
+  },
+  {
+    "code": "CBMT124",
+    "name": "Sales and Marketing Techniques"
+  },
+  {
+    "code": "CBPAI124",
+    "name": "Principles of Accounting"
+  },
+  {
+    "code": "CCPR124",
+    "name": "Fundamentals of Public Relations"
+  },
+  {
+    "code": "CDIA124",
+    "name": "Introduction to Advertising"
+  },
+  {
+    "code": "CIEC124",
+    "name": "Introduction to E-Commerce"
+  }
+]

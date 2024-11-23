@@ -1,0 +1,126 @@
+[
+  {
+    "code": "DCCS1110",
+    "name": "Communication & Study Skills"
+  },
+  {
+    "code": "DDCG112",
+    "name": "Introduction to Computer Graphics"
+  },
+  {
+    "code": "DDCS112",
+    "name": "Creative and Innovation Studies"
+  },
+  {
+    "code": "DDDR110",
+    "name": "Drawing 1"
+  },
+  {
+    "code": "DDGD112",
+    "name": "Introduction to Graphic Design"
+  },
+  {
+    "code": "DDHT110",
+    "name": "History and Theory of Graphics Design"
+  },
+  {
+    "code": "DCIR1210",
+    "name": "Introduction to Research"
+  },
+  {
+    "code": "DDCG1212",
+    "name": "Computer Graphics 1"
+  },
+  {
+    "code": "DDDT1210",
+    "name": "Design Techniques"
+  },
+  {
+    "code": "DDIL1210",
+    "name": "Illustration 1"
+  },
+  {
+    "code": "DDPH1212",
+    "name": "Photography"
+  },
+  {
+    "code": "DDTP1212",
+    "name": "Typography 1"
+  },
+  {
+    "code": "DDCG2112",
+    "name": "Computer Graphics 2"
+  },
+  {
+    "code": "DDDP2112",
+    "name": "Graphic Design Practice 1"
+  },
+  {
+    "code": "DDIL2110",
+    "name": "Illustration 2"
+  },
+  {
+    "code": "DDMD2110",
+    "name": "Multimedia Design 1"
+  },
+  {
+    "code": "DDPH2112",
+    "name": "Photography 2"
+  },
+  {
+    "code": "DDTP21110",
+    "name": "Typography 2"
+  },
+  {
+    "code": "DBPM2210",
+    "name": "Principles of Marketing"
+  },
+  {
+    "code": "DDDI2210",
+    "name": "Digital Illustration"
+  },
+  {
+    "code": "DDDP2212",
+    "name": "Graphic Design Practice 2"
+  },
+  {
+    "code": "DDMD2210",
+    "name": "Multimedia Design 2"
+  },
+  {
+    "code": "DDPD2212",
+    "name": "Packaging Design 1"
+  },
+  {
+    "code": "DDSP2112",
+    "name": "Studio Photography"
+  },
+  {
+    "code": "DBES3110",
+    "name": "Entrepreneurship Skills"
+  },
+  {
+    "code": "DDDP3112",
+    "name": "Graphic Design Practice 3"
+  },
+  {
+    "code": "DDMD3210",
+    "name": "Multimedia Design 3"
+  },
+  {
+    "code": "DDPD3112",
+    "name": "Packaging Design 2"
+  },
+  {
+    "code": "DDPS3110",
+    "name": "Advertising & Professional Practice"
+  },
+  {
+    "code": "DDPI3212",
+    "name": "Practical Internship"
+  },
+  {
+    "code": "DDPR3210",
+    "name": "Project Report"
+  }
+]

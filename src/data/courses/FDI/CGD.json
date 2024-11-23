@@ -1,0 +1,42 @@
+[
+  {
+    "code": "CBTS1112",
+    "name": "Introduction to Typography"
+  },
+  {
+    "code": "CDBD1112",
+    "name": "Basic  Drawing"
+  },
+  {
+    "code": "CDCG1112",
+    "name": "Basic Computer Graphics"
+  },
+  {
+    "code": "CDCS1112",
+    "name": "Creative Studies"
+  },
+  {
+    "code": "CDT1112",
+    "name": "Basic Digital Photography"
+  },
+  {
+    "code": "CDCS1212",
+    "name": "Communication Studies 1"
+  },
+  {
+    "code": "CDDA1212",
+    "name": "Graphic Design Application"
+  },
+  {
+    "code": "CDIT1212",
+    "name": "Typography"
+  },
+  {
+    "code": "CDPD1212",
+    "name": "Basic Packaging Design"
+  },
+  {
+    "code": "CDPE1212",
+    "name": "Photo Editing Techniques"
+  }
+]

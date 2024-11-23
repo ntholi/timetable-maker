@@ -1,0 +1,186 @@
+[
+  {
+    "code": "BBAC1112",
+    "name": "Principles of Accounting"
+  },
+  {
+    "code": "BBBM1110",
+    "name": "Introduction to Business Management"
+  },
+  {
+    "code": "BCAE1110",
+    "name": "Academic English"
+  },
+  {
+    "code": "BDCS1110",
+    "name": "Creative & Innovation Studies"
+  },
+  {
+    "code": "BIIT1110",
+    "name": "Introduction to Information Technology"
+  },
+  {
+    "code": "BBEC1212",
+    "name": "Principles of Economics"
+  },
+  {
+    "code": "BBFC1212",
+    "name": "Introduction to Finance"
+  },
+  {
+    "code": "BBLW1210",
+    "name": "Principles of Law"
+  },
+  {
+    "code": "BBMK1210",
+    "name": "Fundamentals of Marketing"
+  },
+  {
+    "code": "BCEG1210",
+    "name": "Business Communication"
+  },
+  {
+    "code": "BBAC2112",
+    "name": "Financial Accounting"
+  },
+  {
+    "code": "BBCO2110",
+    "name": "Concept Of Organization"
+  },
+  {
+    "code": "BBIB2112",
+    "name": "Introduction to International Business"
+  },
+  {
+    "code": "BBMT2108",
+    "name": "Business Mathematics 1"
+  },
+  {
+    "code": "BIIT2110",
+    "name": "Computer Application for Business"
+  },
+  {
+    "code": "BBEC2212",
+    "name": "Microeconomics"
+  },
+  {
+    "code": "BBFC2210",
+    "name": "Financial Management 1"
+  },
+  {
+    "code": "BBHR2210",
+    "name": "Human Resource Management"
+  },
+  {
+    "code": "BBIB2210",
+    "name": "Export/Import Documentation and Logistics"
+  },
+  {
+    "code": "BBMT2212",
+    "name": "Business Mathematics 2"
+  },
+  {
+    "code": "BIWD2210",
+    "name": "Web Design for Business"
+  },
+  {
+    "code": "BBEC3112",
+    "name": "Macroeconomics"
+  },
+  {
+    "code": "BBLW3110",
+    "name": "Commercial Law"
+  },
+  {
+    "code": "BBMK3112",
+    "name": "Marketing Management"
+  },
+  {
+    "code": "BBQM3110",
+    "name": "Quantitative Methods"
+  },
+  {
+    "code": "BBRS3110",
+    "name": "Risk Management"
+  },
+  {
+    "code": "BBSM3110",
+    "name": "Strategic Management"
+  },
+  {
+    "code": "BBAC3212",
+    "name": "Managerial Accounting"
+  },
+  {
+    "code": "BBFC3210",
+    "name": "Financial Management II"
+  },
+  {
+    "code": "BBIB3212",
+    "name": "International Business Strategy"
+  },
+  {
+    "code": "BBRM3210",
+    "name": "Research Methods"
+  },
+  {
+    "code": "BBST3210",
+    "name": "Statistical Analysis"
+  },
+  {
+    "code": "BBTP3212",
+    "name": "International Trade Theory & Policy"
+  },
+  {
+    "code": "BBCG4110",
+    "name": "Ethics & Corporate Governance"
+  },
+  {
+    "code": "BBHR4110",
+    "name": "Global Human Resource Management"
+  },
+  {
+    "code": "BBIM4110",
+    "name": "International Marketing"
+  },
+  {
+    "code": "BBPJ4110",
+    "name": "Major Project 1"
+  },
+  {
+    "code": "BBPM4112",
+    "name": "Portfolio Management"
+  },
+  {
+    "code": "BBST4110",
+    "name": "Statistical Analysis"
+  },
+  {
+    "code": "BBTI4112",
+    "name": "Technology and Innovation"
+  },
+  {
+    "code": "BBBP4212",
+    "name": "Business Planning"
+  },
+  {
+    "code": "BBEC4212",
+    "name": "International Economics"
+  },
+  {
+    "code": "BBFC4212",
+    "name": "Investment Analysis"
+  },
+  {
+    "code": "BBIB4212",
+    "name": "International Banking"
+  },
+  {
+    "code": "BBLW4210",
+    "name": "Company Law"
+  },
+  {
+    "code": "BBMP4210",
+    "name": "Major Project 2"
+  }
+]
