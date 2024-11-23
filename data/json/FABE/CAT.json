@@ -1,0 +1,42 @@
+[
+  {
+    "code": "CAAD1116",
+    "name": "Architectural Drawing 1"
+  },
+  {
+    "code": "CABM1114",
+    "name": "Introduction to Building Materials"
+  },
+  {
+    "code": "CACG1110",
+    "name": "Introduction to computer and graphic communication skills"
+  },
+  {
+    "code": "CAEF1110",
+    "name": "Foundation English"
+  },
+  {
+    "code": "CAID1114",
+    "name": "Introduction to Design"
+  },
+  {
+    "code": "CAAD1216",
+    "name": "Architectural Drawing 2"
+  },
+  {
+    "code": "CAAM1210",
+    "name": "Applied Mathematics"
+  },
+  {
+    "code": "CABC1214",
+    "name": "Introduction to Building Construction"
+  },
+  {
+    "code": "CABS1210",
+    "name": "Introduction to Building Structures"
+  },
+  {
+    "code": "CACE1210",
+    "name": "Communicative English for Architecture"
+  }
+]

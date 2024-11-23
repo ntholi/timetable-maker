@@ -1,12 +1,14 @@
-import { Module } from './module';
-import { BAAS, CAT, DAT } from './data/FABE';
+import { BAAS, CAT, DAT } from './json/FABE';
 
 interface Program {
   id: number;
   name: string;
   programCode: string;
   faculty: string;
-  modules?: Module[];
+  modules?: {
+    code: string;
+    name: string;
+  }[];
 }
 
 const programs: Program[] = [
@@ -15,21 +17,21 @@ const programs: Program[] = [
     name: 'BA in Architectural Studies',
     programCode: 'BAAS',
     faculty: 'FABE',
-    modules: BAAS.modules,
+    modules: BAAS,
   },
   {
     id: 509,
     name: 'Certificate in Architectural Technology',
     programCode: 'CAT',
     faculty: 'FABE',
-    modules: CAT.modules,
+    modules: CAT,
   },
   {
     id: 493,
     name: 'Diploma in Architecture Technology',
     programCode: 'DAT',
     faculty: 'FABE',
-    modules: DAT.modules,
+    modules: DAT,
   },
   {
     id: 512,
