@@ -15,6 +15,13 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { AutoComplete } from '@/components/ui/autocomplete';
 import { useFacultyStore } from '@/stores/facultyStore';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -246,17 +253,20 @@ export function AllocationDialog({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Preferred Room</FormLabel>
-                  <FormControl>
-                    <AutoComplete
-                      options={roomTypes.map((room) => ({
-                        value: room,
-                        label: room,
-                      }))}
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      placeholder='Select room'
-                    />
-                  </FormControl>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder='Select room' />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {roomTypes.map((room) => (
+                        <SelectItem key={room} value={room}>
+                          {room}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
