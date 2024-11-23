@@ -1,5 +1,6 @@
 import { Module } from './module';
-import BAAS from './data/BAAS';
+import BAAS from './data/FABE/BAAS';
+import CAT from './data/FABE/CAT';
 
 interface Program {
   id: number;
@@ -19,6 +20,7 @@ const programs: Program[] = [
     id: 509,
     name: 'Certificate in Architectural Technology',
     programCode: 'CAT',
+    modules: CAT.modules,
   },
   {
     id: 493,
