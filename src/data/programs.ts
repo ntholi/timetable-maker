@@ -5,33 +5,33 @@ interface Program {
   name: string;
   programCode: string;
   faculty: string;
-  modules?: {
+  courses?: {
     code: string;
     name: string;
   }[];
 }
 
-const programs: Program[] = [
+export const programs: Program[] = [
   {
     id: 518,
     name: 'BA in Architectural Studies',
     programCode: 'BAAS',
     faculty: 'FABE',
-    modules: BAAS,
+    courses: BAAS,
   },
   {
     id: 509,
     name: 'Certificate in Architectural Technology',
     programCode: 'CAT',
     faculty: 'FABE',
-    modules: CAT,
+    courses: CAT,
   },
   {
     id: 493,
     name: 'Diploma in Architecture Technology',
     programCode: 'DAT',
     faculty: 'FABE',
-    modules: DAT,
+    courses: DAT,
   },
   {
     id: 512,
@@ -232,5 +232,3 @@ const programs: Program[] = [
     faculty: 'FCTH',
   },
 ];
-
-export default programs;
