@@ -1,4 +1,4 @@
-import { BAAS, CAT, DAT } from './json/FABE';
+import { BAAS, CAT, DAT } from './courses';
 
 interface Program {
   id: number;
