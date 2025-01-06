@@ -85,19 +85,34 @@ export function ClassForm({ selected, onReset, className }: Props) {
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
-            <FormField
-              control={form.control}
-              name='name'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Class Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder='Enter class name' {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className='grid grid-cols-12 gap-2'>
+              <FormField
+                control={form.control}
+                name='name'
+                render={({ field }) => (
+                  <FormItem className='col-span-10'>
+                    <FormLabel>Class</FormLabel>
+                    <FormControl>
+                      <Input placeholder='Class name' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='year'
+                render={({ field }) => (
+                  <FormItem className='col-span-2'>
+                    <FormLabel>Year</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <div className='flex flex-col gap-2'>
               <Label htmlFor='faculty'>Faculty</Label>

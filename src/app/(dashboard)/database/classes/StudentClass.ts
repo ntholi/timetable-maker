@@ -8,6 +8,7 @@ export const classSchema = z.object({
     .min(1, 'Class name is required')
     .max(6, 'Class name too long')
     .regex(/^[^0-9]+$/, 'Class name cannot contain numbers'),
+  year: z.number().min(1, 'Year is required').max(4, 'Year is too high'),
   faculty: z
     .enum(facultyKeys, {
       required_error: 'Please select a faculty',
