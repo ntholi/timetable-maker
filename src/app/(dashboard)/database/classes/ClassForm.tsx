@@ -10,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useFacultyStore } from '@/stores/facultyStore';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,6 +18,9 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { StudentClass, classSchema } from './StudentClass';
 import { classRepository } from './repository';
+import { AutoComplete, type Option } from '@/components/ui/autocomplete';
+import { programs } from '@/data/programs';
+import { Input } from '@/components/ui/input';
 
 type Props = {
   selected: StudentClass | null;
@@ -28,6 +30,13 @@ type Props = {
 
 export function ClassForm({ selected, onReset, className }: Props) {
   const { faculty } = useFacultyStore();
+
+  const courseOptions: Option[] = programs
+    .filter((program) => program.faculty === faculty)
+    .map((program) => ({
+      value: program.code,
+      label: program.code,
+    }));
 
   const form = useForm<StudentClass>({
     resolver: zodResolver(classSchema),
@@ -42,11 +51,13 @@ export function ClassForm({ selected, onReset, className }: Props) {
       form.reset({
         name: selected.name,
         faculty: faculty,
+        year: selected.year,
       });
     } else {
       form.reset({
         name: '',
         faculty: faculty,
+        year: 1,
       });
     }
   }, [selected, form, faculty]);
@@ -93,7 +104,14 @@ export function ClassForm({ selected, onReset, className }: Props) {
                   <FormItem className='col-span-10'>
                     <FormLabel>Class</FormLabel>
                     <FormControl>
-                      <Input placeholder='Class name' {...field} />
+                      <AutoComplete
+                        options={courseOptions}
+                        value={field.value}
+                        onValueChange={(value) => {
+                          field.onChange(value);
+                        }}
+                        placeholder='Select a course'
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
